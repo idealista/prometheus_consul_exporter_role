@@ -1,0 +1,18 @@
+[Unit]
+Description=prometheus consul exporter
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+PrivateTmp=yes
+User={{ consul_exporter_user }}
+Group={{ consul_exporter_group }}
+RuntimeDirectory=consul_exporter
+ExecStart=/bin/sh -c "{{ consul_exporter_bin_path }}/consul_exporter {% for option in consul_exporter_flags %}-{{ option }} {% endfor %}> {{ consul_exporter_log_path }}/{{ consul_exporter_log_file }} 2>&1"
+ExecStartPost=/bin/sh -c "echo $MAINPID > /run/consul_exporter/consul_exporter.pid"
+ExecReload=/bin/kill -HUP $MAINPID
+PIDFile=/run/consul_exporter/consul_exporter.pid
+KillSignal=SIGTERM
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,6 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - consul
+    - prometheus_consul_exporter-role

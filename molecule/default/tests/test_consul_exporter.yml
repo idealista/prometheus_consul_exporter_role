@@ -1,0 +1,44 @@
+# Molecule managed
+
+---
+http:
+  http://localhost:{{ consul_exporter_port }}/metrics/:
+    status: 200
+
+service:
+  consul_exporter:
+    enabled: true
+    running: true
+
+file:
+  {{ consul_exporter_root_path }}:
+    exists: true
+    filetype: directory
+    owner: {{ consul_exporter_user }}
+    group: {{ consul_exporter_group }}
+  /usr/bin/consul_exporter:
+    exists: true
+    filetype: symlink
+    linked-to: "{{ consul_exporter_root_path }}/bin/consul_exporter"
+  /etc/systemd/system/consul_exporter.service:
+    exists: true
+
+user:
+  {{ consul_exporter_user }}:
+    exists: true
+    groups:
+      - {{ consul_exporter_group }}
+
+group:
+  {{ consul_exporter_group }}:
+    exists: true
+
+port:
+  tcp6:{{ consul_exporter_port }}:
+    listening: true
+
+command:
+  /usr/bin/consul_exporter -version:
+    exit-status: 0
+    stdout:
+      - "consul_exporter, version {{ consul_exporter_version }}"

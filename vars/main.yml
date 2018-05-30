@@ -1,0 +1,5 @@
+---
+
+consul_exporter_release_name: "consul_exporter-{{ consul_exporter_version }}.{{ consul_exporter_release_system }}"
+consul_exporter_package: "consul_exporter-{{ consul_exporter_version }}.{{ consul_exporter_release_system }}.tar.gz"
+consul_exporter_url: "https://github.com/prometheus/consul_exporter/releases/download/v{{ consul_exporter_version }}/{{ consul_exporter_package }}"

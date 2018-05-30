@@ -1,0 +1,33 @@
+---
+## General
+consul_exporter_version: 0.3.0
+consul_exporter_release_system: linux-amd64
+
+# Set true to force the download and installation of the binary
+consul_exporter_force_reinstall: false
+
+## Service options
+# Owner
+consul_exporter_user: consul_exporter
+consul_exporter_user_shell: /usr/sbin/nologin
+consul_exporter_group: consul_exporter
+
+# start on boot
+consul_exporter_service_enabled: true
+# current state: started, stopped
+consul_exporter_service_state: started
+
+# Files & Paths
+consul_exporter_log_path: /var/log/consul_exporter
+consul_exporter_log_file: "consul_exporter.log"
+consul_exporter_root_path: /opt/consul_exporter
+consul_exporter_bin_path: "{{ consul_exporter_root_path }}/bin"
+
+# Port & path
+consul_exporter_port: 9107
+consul_exporter_path: "metrics"
+
+# Available flags can be found in https://github.com/prometheus/consul_exporter#flags
+# Sample:
+# consul_exporter_flags:
+  # - "consul.server=localhost:8500"

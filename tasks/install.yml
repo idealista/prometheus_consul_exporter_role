@@ -1,0 +1,62 @@
+---
+
+- name: CONSUL_EXPORTER | Ensure consul_exporter group
+  group:
+    name: "{{ consul_exporter_group }}"
+    system: yes
+    state: present
+
+- name: CONSUL_EXPORTER | Ensure consul_exporter user
+  user:
+    name: "{{ consul_exporter_user }}"
+    group: "{{ consul_exporter_group }}"
+    shell: "{{ consul_exporter_user_shell }}"
+    system: yes
+    createhome: no
+
+- name: CONSUL_EXPORTER | Ensure skeleton paths
+  file:
+    dest: "{{ item }}"
+    owner: "{{ consul_exporter_user }}"
+    group: "{{ consul_exporter_group }}"
+    state: directory
+  with_items:
+    - "{{ consul_exporter_root_path }}"
+    - "{{ consul_exporter_bin_path }}"
+    - "{{ consul_exporter_log_path }}"
+
+- name: CONSUL_EXPORTER | Check consul_exporter version
+  command: consul_exporter -version
+  register: consul_exporter_check
+  changed_when: false
+  ignore_errors: true
+
+- name: CONSUL_EXPORTER | Download package
+  get_url:
+    url: "{{ consul_exporter_url }}"
+    dest: "/tmp/{{ consul_exporter_package }}"
+  when: 'consul_exporter_force_reinstall or consul_exporter_check|failed or "consul_exporter, version {{ consul_exporter_version }}" not in consul_exporter_check.stdout'
+
+- name: CONSUL_EXPORTER | Extract package
+  unarchive:
+    copy: no
+    src: "/tmp/{{ consul_exporter_package }}"
+    dest: /tmp
+  when: 'consul_exporter_force_reinstall or consul_exporter_check|failed or "consul_exporter, version {{ consul_exporter_version }}" not in consul_exporter_check.stdout'
+
+- name: CONSUL_EXPORTER | Copy binary
+  copy:
+    src: "/tmp/{{ consul_exporter_release_name }}/consul_exporter"
+    dest: "{{ consul_exporter_bin_path }}/consul_exporter"
+    owner: "{{ consul_exporter_user }}"
+    group: "{{ consul_exporter_group }}"
+    remote_src: True
+    mode: 0755
+  when: 'consul_exporter_force_reinstall or consul_exporter_check|failed or "consul_exporter, version {{ consul_exporter_version }}" not in consul_exporter_check.stdout'
+  notify: restart consul_exporter
+
+- name: CONSUL_EXPORTER | Link binary
+  file:
+    src: "{{ consul_exporter_bin_path }}/consul_exporter"
+    dest: "/usr/bin/consul_exporter"
+    state: link

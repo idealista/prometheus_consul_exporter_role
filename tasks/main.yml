@@ -1,0 +1,19 @@
+---
+
+- name: CONSUL_EXPORTER | Install
+  import_tasks: install.yml
+  tags:
+    - install
+    - prometheus_consul_exporter-install
+
+- name: CONSUL_EXPORTER | Configure
+  import_tasks: configure.yml
+  tags:
+    - configure
+    - prometheus_consul_exporter-configure
+
+- name: CONSUL_EXPORTER | Service
+  import_tasks: service.yml
+  tags:
+    - service
+    - prometheus_consul_exporter-service

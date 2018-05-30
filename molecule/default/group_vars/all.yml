@@ -1,0 +1,10 @@
+---
+# Consul exporter related variables
+consul_exporter_flags:
+  - "consul.server=10.80.130.64:8500"
+
+# Consul related variables
+consul_server_nodes:
+  - "{{ ansible_nodename }}"
+
+consul_server: true

@@ -1,0 +1,6 @@
+tests/playbook.retry
+tests/.cache
+.molecule
+.vagrant
+.cache
+*.iml

@@ -1,0 +1,8 @@
+---
+
+- name: CONSUL_EXPORTER | Configuring service
+  systemd:
+    name: consul_exporter
+    state: "{{ consul_exporter_service_state }}"
+    enabled: "{{ consul_exporter_service_enabled }}"
+    daemon_reload: yes
