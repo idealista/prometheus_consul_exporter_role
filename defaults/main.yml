@@ -30,4 +30,4 @@ consul_exporter_path: "metrics"
 # Available flags can be found in https://github.com/prometheus/consul_exporter#flags
 # Sample:
 # consul_exporter_flags:
-  # - "consul.server=localhost:8500"
+#  - "consul.server=localhost:8500"
