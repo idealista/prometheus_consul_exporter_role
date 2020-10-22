@@ -35,14 +35,14 @@
   get_url:
     url: "{{ consul_exporter_url }}"
     dest: "/tmp/{{ consul_exporter_package }}"
-  when: 'consul_exporter_force_reinstall or consul_exporter_check|failed or "consul_exporter, version {{ consul_exporter_version }}" not in consul_exporter_check.stdout'
+  when: 'consul_exporter_force_reinstall or consul_exporter_check|failed or "consul_exporter, version consul_exporter_version" not in consul_exporter_check.stdout'
 
 - name: CONSUL_EXPORTER | Extract package
   unarchive:
     copy: false
     src: "/tmp/{{ consul_exporter_package }}"
     dest: /tmp
-  when: 'consul_exporter_force_reinstall or consul_exporter_check|failed or "consul_exporter, version {{ consul_exporter_version }}" not in consul_exporter_check.stdout'
+  when: 'consul_exporter_force_reinstall or consul_exporter_check|failed or "consul_exporter, version consul_exporter_version" not in consul_exporter_check.stdout'
 
 - name: CONSUL_EXPORTER | Copy binary
   copy:
@@ -52,7 +52,7 @@
     group: "{{ consul_exporter_group }}"
     remote_src: true
     mode: 0755
-  when: 'consul_exporter_force_reinstall or consul_exporter_check|failed or "consul_exporter, version {{ consul_exporter_version }}" not in consul_exporter_check.stdout'
+  when: 'consul_exporter_force_reinstall or consul_exporter_check|failed or "consul_exporter, version consul_exporter_version" not in consul_exporter_check.stdout'
   notify: restart consul_exporter
 
 - name: CONSUL_EXPORTER | Link binary
