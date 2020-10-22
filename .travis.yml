@@ -1,28 +1,21 @@
 ---
+dist: xenial
 language: python
 python: "3.8"
-sudo: required
-
-env:
-  #- ansible_version: 2.4.1.0
-  #- ansible_version: 2.4.2.0
-  #- ansible_version: 2.4.3.0
-  #- ansible_version: 2.4.4.0
-  #- ansible_version: 2.5.0.0
-  - ansible_version: 2.8.0
-  - ansible_version: 2.9.0
-  - ansible_version: 2.9.9
-
+os: linux
 services:
   - docker
-
 install:
-  - pip install ansible==${ansible_version}
-  - pip install molecule
-  - pip install docker
+  - pip install pipenv
+  - pipenv sync
+env:
+  jobs:
+    - MOLECULE_DISTRO=debian:jessie-slim
+    - MOLECULE_DISTRO=debian:stretch-slim
 
 script:
-  - molecule test
+  - export MOLECULE_DISTRO=${MOLECULE_DISTRO}
+  - pipenv run molecule test
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
