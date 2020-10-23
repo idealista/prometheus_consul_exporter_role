@@ -38,7 +38,10 @@ port:
     listening: true
 
 command:
-  /usr/bin/consul_exporter -version:
+  cat /var/log/consul_exporter/consul_exporter.log:
     exit-status: 0
     stdout:
-      - "consul_exporter, version {{ consul_exporter_version }}"
+      - "version={{ consul_exporter_version }}"
+    stderr: []
+    skip: false
+
