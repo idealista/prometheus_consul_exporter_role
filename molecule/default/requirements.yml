@@ -1,7 +1,4 @@
 ---
-#- src: idealista.consul_role
-#  version: 1.4.0
-#  name: consul
-- src: https://github.com/idealista/consul_role.git
-  version: features/46
+- src: idealista.consul_role
+  version: 1.4.0
   name: consul
