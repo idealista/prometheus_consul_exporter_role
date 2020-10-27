@@ -10,11 +10,11 @@ lint: |
   ansible-lint .
 
 platforms:
-  - name: consulexporter_debian9
+  - name: consulexportertest
     groups:
       - consulexporter
-    image: ${MOLECULE_DISTRO:-debian:stretch-slim}
-    privileged: false
+    image: ${MOLECULE_DISTRO:-debian:buster-slim}
+    privileged: true
     capabilities:
       - SYS_ADMIN
     volumes:
@@ -28,7 +28,8 @@ platforms:
       - /tmp
       - /run
       - /run/lock
-
+    stop_signal: 'RTMIN+3'
+  
 provisioner:
   name: ansible
   lint:
