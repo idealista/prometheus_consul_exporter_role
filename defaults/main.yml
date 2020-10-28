@@ -1,6 +1,6 @@
 ---
 ## General
-consul_exporter_version: 0.3.0
+consul_exporter_version: 0.7.1
 consul_exporter_release_system: linux-amd64
 
 # Set true to force the download and installation of the binary
@@ -8,6 +8,7 @@ consul_exporter_force_reinstall: false
 
 ## Service options
 # Owner
+consul_exporter_private_tmp: no
 consul_exporter_user: consul_exporter
 consul_exporter_user_shell: /usr/sbin/nologin
 consul_exporter_group: consul_exporter
@@ -30,4 +31,4 @@ consul_exporter_path: "metrics"
 # Available flags can be found in https://github.com/prometheus/consul_exporter#flags
 # Sample:
 # consul_exporter_flags:
-  # - "consul.server=localhost:8500"
+#  - "consul.server=localhost:8500"

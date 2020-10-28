@@ -3,7 +3,7 @@
 - name: CONSUL_EXPORTER | Ensure consul_exporter group
   group:
     name: "{{ consul_exporter_group }}"
-    system: yes
+    system: true
     state: present
 
 - name: CONSUL_EXPORTER | Ensure consul_exporter user
@@ -11,8 +11,8 @@
     name: "{{ consul_exporter_user }}"
     group: "{{ consul_exporter_group }}"
     shell: "{{ consul_exporter_user_shell }}"
-    system: yes
-    createhome: no
+    system: true
+    createhome: false
 
 - name: CONSUL_EXPORTER | Ensure skeleton paths
   file:
@@ -35,14 +35,14 @@
   get_url:
     url: "{{ consul_exporter_url }}"
     dest: "/tmp/{{ consul_exporter_package }}"
-  when: 'consul_exporter_force_reinstall or consul_exporter_check|failed or "consul_exporter, version {{ consul_exporter_version }}" not in consul_exporter_check.stdout'
+  when: 'consul_exporter_force_reinstall or consul_exporter_check is failed or "consul_exporter, version consul_exporter_version" not in consul_exporter_check.stdout'
 
 - name: CONSUL_EXPORTER | Extract package
   unarchive:
-    copy: no
+    copy: false
     src: "/tmp/{{ consul_exporter_package }}"
     dest: /tmp
-  when: 'consul_exporter_force_reinstall or consul_exporter_check|failed or "consul_exporter, version {{ consul_exporter_version }}" not in consul_exporter_check.stdout'
+  when: 'consul_exporter_force_reinstall or consul_exporter_check is failed or "consul_exporter, version consul_exporter_version" not in consul_exporter_check.stdout'
 
 - name: CONSUL_EXPORTER | Copy binary
   copy:
@@ -50,9 +50,9 @@
     dest: "{{ consul_exporter_bin_path }}/consul_exporter"
     owner: "{{ consul_exporter_user }}"
     group: "{{ consul_exporter_group }}"
-    remote_src: True
+    remote_src: true
     mode: 0755
-  when: 'consul_exporter_force_reinstall or consul_exporter_check|failed or "consul_exporter, version {{ consul_exporter_version }}" not in consul_exporter_check.stdout'
+  when: 'consul_exporter_force_reinstall or consul_exporter_check is failed or "consul_exporter, version consul_exporter_version" not in consul_exporter_check.stdout'
   notify: restart consul_exporter
 
 - name: CONSUL_EXPORTER | Link binary

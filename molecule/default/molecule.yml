@@ -1,18 +1,20 @@
 ---
 dependency:
   name: galaxy
+
 driver:
   name: docker
-lint:
-  name: yamllint
-  options:
-    config-file: molecule/.yamllint
+
+lint: |
+  yamllint .
+  ansible-lint .
+
 platforms:
-  - name: consulexporter_debian9
+  - name: consulexportertest
     groups:
       - consulexporter
-    image: geerlingguy/docker-debian9-ansible:latest
-    privileged: True
+    image: ${MOLECULE_DISTRO:-debian:buster-slim}
+    privileged: true
     capabilities:
       - SYS_ADMIN
     volumes:
@@ -22,23 +24,17 @@ platforms:
       - 9107/tcp
     published_ports:
       - 0.0.0.0:8853:9107/tcp
-  - name: consulexporter_debian8
-    groups:
-      - consulexporter
-    image: geerlingguy/docker-debian8-ansible:latest
-    privileged: True
-    capabilities:
-      - SYS_ADMIN
-    volumes:
-      - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
-    command: '/lib/systemd/systemd'
+    tmpfs:
+      - /tmp
+      - /run
+      - /run/lock
+    stop_signal: 'RTMIN+3'
+  
 provisioner:
   name: ansible
   lint:
     name: ansible-lint
-scenario:
-  name: default
+
 verifier:
-  name: goss
-  lint:
-    name: 'None'
+  name: ansible
+  
