@@ -3,4 +3,4 @@
   hosts: all
   roles:
     - consul
-    - prometheus_consul_exporter-role
+    - prometheus_consul_exporter_role
