@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a ch
 
 
 ## [Unreleased](https://github.com/idealista/prometheus_consul_exporter_role/tree/develop)
+
+
+## [2.0.0](https://github.com/idealista/prometheus_consul_exporter_role/tree/2.0.0)
+### [Full Changelog](https://github.com/idealista/prometheus_consul_exporter_role/compare/1.0.0...2.0.0)
 ### Added
 - *Pipenv* @xtianae7
 - *Support debian buster* @xtianae7
@@ -19,6 +23,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a ch
 
 ### Removed
 - *Debian jessie support* @xtianae7
+
 
 ## [1.0.0](https://github.com/idealista/prometheus_consul_exporter_role/tree/1.0.0)
 ### Added
