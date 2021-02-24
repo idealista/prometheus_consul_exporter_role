@@ -5,7 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a ch
 
 
 ## [Unreleased](https://github.com/idealista/prometheus_consul_exporter_role/tree/develop)
-
+### Fixed
+- *[#6](https://github.com/idealista/prometheus_consul_exporter_role/issues/6) Fix install check command* @blalop
 
 ## [2.0.0](https://github.com/idealista/prometheus_consul_exporter_role/tree/2.0.0)
 ### [Full Changelog](https://github.com/idealista/prometheus_consul_exporter_role/compare/1.0.0...2.0.0)

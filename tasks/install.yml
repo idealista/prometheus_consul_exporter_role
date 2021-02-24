@@ -26,7 +26,7 @@
     - "{{ consul_exporter_log_path }}"
 
 - name: CONSUL_EXPORTER | Check consul_exporter version
-  command: consul_exporter -version
+  command: consul_exporter -h
   register: consul_exporter_check
   changed_when: false
   ignore_errors: true
